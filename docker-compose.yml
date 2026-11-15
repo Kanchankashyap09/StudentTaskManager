@@ -1,0 +1,24 @@
+name: studyflow
+
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: studyflow-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: studyflow
+      MYSQL_USER: studyflow
+      MYSQL_PASSWORD: studyflow
+      MYSQL_ROOT_PASSWORD: studyflow_root
+    ports:
+      - "3306:3306"
+    volumes:
+      - studyflow_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-ustudyflow", "-pstudyflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  studyflow_mysql_data:
